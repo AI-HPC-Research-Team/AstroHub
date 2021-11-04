@@ -135,20 +135,4 @@ class KubernetClient(KubernetTools):
 
 
 
-# # Configs can be set in Configuration class directly or using helper utility
-# config.load_kube_config(config_file="/Users/renyiming/kubernetes/kubeconfig.yaml")
-#
-# v1 = client.CoreV1Api()
-# print("Listing pods with their IPs:")
-# ret = v1.list_pod_for_all_namespaces(watch=False)
-# for i in ret.items:
-#     print("%s\t%s\t%s" % (i.status.pod_ip, i.metadata.namespace, i.metadata.name))
-# a = KubernetClient()
-# print(a.delete_job('test',False))
-# job = a.create_job_object('d400a239-c252-4fec-bf17-a9ded50729ba',1,0,'')
-# # print(job)
-# print(a.create_job(job))
-# print(a.get_pods_by_job('d400a239-c252-4fec-bf17-a9ded50729ba'))
-# print(a.get_job_result('test'))
-# print(a.inspect_job_status('d400a239-c252-4fec-bf17-a9ded50729ba'))
-# print(a.create_job('astrohub'))
+

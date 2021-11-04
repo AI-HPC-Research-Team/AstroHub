@@ -94,9 +94,3 @@ class DockerClient:
     #     return self.client.containers.prune()
 
 
-# b = DockerClient('renym')
-# b.get_requirements('d400a239-c252-4fec-bf17-a9ded50729ba')
-# time.sleep(2)
-# b.docker_file('d400a239-c252-4fec-bf17-a9ded50729ba','d400a239-c252-4fec-bf17-a9ded50729ba')
-# b.build_image('d400a239-c252-4fec-bf17-a9ded50729ba')
-# print(b.list_containers())

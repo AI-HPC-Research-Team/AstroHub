@@ -279,9 +279,5 @@ a = AstroHubClient('renym', 'renym@2021')
 print(a.get_task_status('d400a239-c252-4fec-bf17-a9ded50729ba'))
 print(a.get_task_result('d400a239-c252-4fec-bf17-a9ded50729ba'))
 print(a.get_task_log('d400a239-c252-4fec-bf17-a9ded50729ba'))
-# print(a.modelSearch_related_doi('10.YET/UNASSIGNED'))
-# res = a.modelSearch_id('d400a239-c252-4fec-bf17-a9ded50729ba')
-# print(res)
-# print(a.parsing_result(res,10))
 
 

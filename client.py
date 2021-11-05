@@ -52,6 +52,8 @@ class AstroHubClient(KubernetClient,DockerClient):
         # env_dir = os.listdir(r"/Users/renyiming/userhome/AstroHub/env")
         return model_instance,data_instance
 
+    # def publish(self,path):
+    #     pass
 
     def filter_latest(self,res):
         res_dic = {}
@@ -273,11 +275,5 @@ class AstroHubClient(KubernetClient,DockerClient):
 
 
 
-
-a = AstroHubClient('renym', 'renym@2021')
-# a.run('d400a239-c252-4fec-bf17-a9ded50729ba','d400a239-c252-4fec-bf17-a9ded50729ba',1,0,'')
-print(a.get_task_status('d400a239-c252-4fec-bf17-a9ded50729ba'))
-print(a.get_task_result('d400a239-c252-4fec-bf17-a9ded50729ba'))
-print(a.get_task_log('d400a239-c252-4fec-bf17-a9ded50729ba'))
 
 

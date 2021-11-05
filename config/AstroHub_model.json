@@ -1,0 +1,63 @@
+{
+  "datacite": {
+    "creators": [
+      {
+        "affiliations": "affiliations",
+        "familyname": "familyname",
+        "givenname": "givenname"
+      }
+    ],
+    "identifier": {
+      "identifier": "10.IsDescribedBy",
+      "identifierType": "DOI"
+    },
+    "description": "description",
+    "publicationYear": "publicationYear"
+  },
+  "AstroHub": {
+    "id": "f27c0b74-3e26-11ec-9360-8c8590c0b3f0",
+    "build_location": "/userhome/AstroHub/Models/f27c0b74-3e26-11ec-9360-8c8590c0b3f0",
+    "shorthand_name": "A short title for the servable",
+    "name": "AstroHub",
+    "publication_date": 1636109753953,
+    "domains": [
+      "some",
+      "pertinent",
+      "fields"
+    ],
+    "dependencies": {
+      "module_name": "version"
+    },
+    "version": "version",
+    "type": "Model"
+  },
+  "model": {
+    "methods": {
+      "run": {
+        "input": {
+          "description": "description",
+          "shape": [
+            "shapeList"
+          ],
+          "type": "datatype:string"
+        },
+        "method_details": {
+          "autobatch": false,
+          "method_name": "name",
+          "module": "module"
+        },
+        "output": {
+          "description": "description",
+          "shape": [
+            "shapeList"
+          ],
+          "type": "datatype:string"
+        },
+        "parameters": {
+          "parameters": "parameters"
+        }
+      }
+    },
+    "type": "PyTorch"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "AstroHub": {
+    "id": "d1d3b322-3e26-11ec-832f-8c8590c0b3f0",
+    "build_location": "/userhome/AstroHub/Dataset/d1d3b322-3e26-11ec-832f-8c8590c0b3f0",
+    "shorthand_name": "A short title for the dataset",
+    "name": "AstroHub",
+    "owner": "owner",
+    "publication_date": 1636109699163,
+    "version": "version",
+    "type": "Dataset",
+    "related-model": "d400a239-c252-4fec-bf17-a9ded50729ba"
+  }
+}

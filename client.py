@@ -17,8 +17,25 @@ import requests
 
 
 class AstroHubClient(KubernetClient,DockerClient):
+    """Main class for interacting with the AstroHub service
+
+    Encapsulates the core functions of AstroHub which includes:
+
+    1. Search: filter model/data info based on name, author,domain,
+        related_doi, and return a meassage list order by publication data
+    2. Publish: submit local model/data pipeline to remote server and add model
+        description to remote json
+    3. Run: Compress remote model, dataset, env into a new image. Generate Kubernetes
+        job by running image. Execute and return output to the user
+    """
 
     def __init__(self, pcl_username, pcl_password):
+        """Initialize the client
+
+        Token-based authentication: Calling PCL login API and receive the token
+        :param (string) pcl_username
+        :param (string) pcl_password
+        """
         super().__init__()
         self.client = docker.from_env()
         self.core = client.CoreV1Api()
@@ -42,10 +59,14 @@ class AstroHubClient(KubernetClient,DockerClient):
 
     @property
     def get_instance(self):
-        # model_json = "/Users/renyiming/userhome/AstroHub/Models/search_result.json"
-        # data_json = "/Users/renyiming/userhome/AstroHub/Dataset/search_result.json"
-        model_json = "/Users/renyiming/userhome/AstroHub/Models/models.json"
-        data_json = "/Users/renyiming/userhome/AstroHub/Dataset/dataset.json"
+        """Load model and data message from the remote path
+
+        :return: (json) model_instance,data_instance
+        """
+        # model_json = "userhome/AstroHub/Models/search_result.json"
+        # data_json = "userhome/AstroHub/Dataset/search_result.json"
+        model_json = "userhome/AstroHub/Models/models.json"
+        data_json = "userhome/AstroHub/Dataset/dataset.json"
         model_instance = json.load(open(model_json))
         data_instance = json.load(open(data_json))
 
@@ -56,6 +77,13 @@ class AstroHubClient(KubernetClient,DockerClient):
     #     pass
 
     def filter_latest(self,res):
+        """Filter model/data info search result by publication date,
+        only return the latest one
+
+
+        :param (dict) res: info dict from Search functions
+        :return:([list]) re-ordered list
+        """
         res_dic = {}
         for i in res:
             if 'publication_date' not in i['AstroHub']:
@@ -82,6 +110,10 @@ class AstroHubClient(KubernetClient,DockerClient):
                  i['model']['type'],i['AstroHub']['dependencies']] for i in res_dic.values()]
 
     def search_all_model(self):
+        """Get all of the models
+
+        :return: (list) model_lis: search result
+        """
         model_info = self.get_instance[0]
         model_lis = set()
         for i in model_info:
@@ -89,6 +121,11 @@ class AstroHubClient(KubernetClient,DockerClient):
         return list(model_lis)
 
     def modelSearch_id(self,uuid):
+        """Get models with specific id
+
+        :param (str) uuid
+        :return: (list) res: ordered by publication date
+        """
         if uuid:
             model_info = self.get_instance[0]
             res = []
@@ -107,6 +144,11 @@ class AstroHubClient(KubernetClient,DockerClient):
             )
 
     def modelSearch_name(self,name):
+        """Get models with name
+
+        :param (str) name:
+        :return: (list) res: ordered by publication date
+        """
         if name:
             model_info = self.get_instance[0]
             res = []
@@ -123,6 +165,11 @@ class AstroHubClient(KubernetClient,DockerClient):
             )
 
     def modelSearch_author(self,author):
+        """Get models with author name
+
+        :param (str) author:
+        :return: (list) res: ordered by publication date
+        """
         if author:
             model_info = self.get_instance[0]
             res = []
@@ -146,6 +193,11 @@ class AstroHubClient(KubernetClient,DockerClient):
 
 
     def modelSearch_domains(self,domain):
+        """Get models with domains
+
+        :param (str) domain:
+        :return: (list) res: ordered by publication date
+        """
         if domain:
             model_info = self.get_instance[0]
             res = []
@@ -166,6 +218,11 @@ class AstroHubClient(KubernetClient,DockerClient):
 
 
     def modelSearch_related_doi(self,doi):
+        """Get models with related doi
+
+        :param (str) doi:
+        :return: (list) res: ordered by publication date
+        """
         if doi:
             model_info = self.get_instance[0]
             res = []
@@ -184,6 +241,12 @@ class AstroHubClient(KubernetClient,DockerClient):
             )
 
     def parsing_result(self,res,limit):
+        """Parsing search result into specific format
+
+        :param (list) res
+        :param (int) limit: limits on the number of displayed items
+        :return:（list) results_rf
+        """
         if len(res) > limit:
             enum = limit
         else:
@@ -244,12 +307,25 @@ class AstroHubClient(KubernetClient,DockerClient):
             )
 
     def compress_image(self,model_id,data_id):
+        """Compress relevant model, dataset and env into image
+
+        :param model_id:
+        :param data_id:
+        """
         self.get_requirements(model_id)
         time.sleep(2)
         self.docker_file(model_id,data_id)
         self.build_image(model_id)
 
     def run(self,model_id,data_id,cpu,gpu,nodeName):
+        """Main function for running task
+
+        :param model_id:
+        :param data_id:
+        :param (int) cpu: CPU amount used for task
+        :param (int) gpu: GPU amount used for task
+        :param (str) nodeName: Node used for task
+        """
         self.compress_image(model_id,data_id)
         time.sleep(2)
         job = self.create_job_object(model_id,cpu=cpu,gpu=gpu,nodeName=nodeName)
@@ -271,8 +347,6 @@ class AstroHubClient(KubernetClient,DockerClient):
             print(logs)
         else:
             return 'No job running'
-
-
 
 
 

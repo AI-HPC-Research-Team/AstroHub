@@ -1,6 +1,10 @@
 from kubernetes import client,config
 
 class KubernetTools:
+    """Class for helping the KubernetesClient which
+        mainly used other funtion from Kubernetes sdk
+
+    """
 
     def __init__(self):
         config.load_kube_config(config_file="/Users/renyiming/kubernetes/kubeconfig.yaml")

@@ -4,6 +4,11 @@ import os
 import time
 
 class DockerClient:
+    """Main class for interacting with the Docker
+
+    This class mainly used to help AstroHubClient compress files
+    into docker image
+    """
 
     def __init__(self, pcl_username):
         self.client = docker.from_env()
@@ -28,6 +33,9 @@ class DockerClient:
         return path
 
     def get_dependencies(self,uuid):
+        """Get model dependencies by parsing json
+
+        """
         model_json = "/Users/renyiming/userhome/AstroHub/Models/models.json"
         model_instance = json.load(open(model_json))
         if uuid:
@@ -46,6 +54,11 @@ class DockerClient:
             )
 
     def get_requirements(self,uuid):
+        """Make requirements file
+
+        :param uuid:
+        :return:
+        """
         model_instance = self.get_dependencies(uuid)
         dependencies = model_instance[0]
         requirement = open("/Users/renyiming/userhome/AstroHub/requirements.txt", 'w')
@@ -57,6 +70,12 @@ class DockerClient:
         requirement.close()
 
     def docker_file(self,model_id,data_id):
+        """Make Docker file
+
+        :param model_id:
+        :param data_id:
+        :return:
+        """
         dockerfile = open("/Users/renyiming/userhome/AstroHub/Dockerfile", 'w')
         # self.get_requirements(model_id)
         doc = ['FROM python:3.7'+'\n','MAINTAINER '+self.usrname+'\n','RUN mkdir /src','WORKDIR /src'+'\n',
@@ -78,6 +97,11 @@ class DockerClient:
 
 
     def build_image(self,model_id):
+        """Make Docker image
+
+        :param model_id:
+        :return:
+        """
         root = "/Users/renyiming/userhome/AstroHub/"
         os.system('docker build -t astrohub:' + model_id +' ' + root)
 
@@ -92,5 +116,4 @@ class DockerClient:
 
     # def prune_containers(self):
     #     return self.client.containers.prune()
-
 

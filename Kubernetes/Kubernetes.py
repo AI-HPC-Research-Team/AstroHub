@@ -4,13 +4,28 @@ from .KubernetToolkit import KubernetTools
 import time
 
 class KubernetClient(KubernetTools):
+    """Main class for interacting with the Kubernetes service which
+    mainly used for job management
+
+    """
 
     def __init__(self):
+        """Initialize the Kubernetes core and batch APIs
+
+        """
         config.load_kube_config(config_file="/Users/renyiming/kubernetes/kubeconfig.yaml")
         self.core = client.CoreV1Api()
         self.batch = client.BatchV1Api()
 
     def create_job_object(self,uuid,cpu,gpu,nodeName):
+        """Make job yaml file
+
+        :param uuid:
+        :param cpu:
+        :param gpu:
+        :param nodeName:
+        :return:
+        """
         resources = client.V1ResourceRequirements(
             limits={'cpu':cpu,'alpha.kubernetes.io/nvidia-gpu':gpu}
         )
@@ -60,6 +75,11 @@ class KubernetClient(KubernetTools):
 
 
     def inspect_job_status(self,jobName):
+        """Inspect task execute status
+
+        :param jobName:
+        :return:
+        """
         if not self.list_job().keys():
             print('No job exists')
             return
@@ -82,6 +102,11 @@ class KubernetClient(KubernetTools):
     #     status = self.batch.read_namespaced_job_status(jobName,'astrohub')
 
     def get_job_result(self,jobName):
+        """Get job output by parsing pods log
+
+        :param jobName:
+        :return:
+        """
         pods = self.get_pods_by_job(jobName)
         if pods:
             if self.inspect_job_status(jobName) == 'Completed':

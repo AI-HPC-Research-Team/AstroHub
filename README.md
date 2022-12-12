@@ -111,6 +111,7 @@ dataset.set_version("version")
 dataset.set_type()
 
 ```
-
+#### Model Parallelism
+<img src="Structure.jpg" width="700" height="700"/><br/>
 ## Project Support
 This material is based upon work supported by PengCheng Lab.

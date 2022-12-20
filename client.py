@@ -262,33 +262,33 @@ class AstroHubClient(KubernetClient,DockerClient):
         #                        ascending=[True, True, False], inplace=True)
         return results_rf
 
-    # def common_options(f):
-    #     """
-    #     Global/shared options decorator.
-    #
-    #     :param f:
-    #     :return:
-    #     """
-    #     f = click.help_option('-h', '--help')(f)
-    #     # f = click.version_option(__version__, '-v', '--version')(f)
-    #     # f = debug_option(f)
-    #     return f
-    #
-    # def AstroHub_cmd(*args, **kwargs):
-    #     """
-    #     Wrapper over click.command which sets common opts
-    #
-    #     :param args:
-    #     :param kwargs:
-    #     :return:
-    #     """
-    #
-    #     def inner_decorator(f):
-    #         f = click.command(*args, **kwargs)(f)
-    #         f = common_options(f)
-    #         return f
-    #
-    #     return inner_decorator
+    def common_options(f):
+        """
+        Global/shared options decorator.
+    
+        :param f:
+        :return:
+        """
+        f = click.help_option('-h', '--help')(f)
+        # f = click.version_option(__version__, '-v', '--version')(f)
+        # f = debug_option(f)
+        return f
+    
+    def AstroHub_cmd(*args, **kwargs):
+        """
+        Wrapper over click.command which sets common opts
+    
+        :param args:
+        :param kwargs:
+        :return:
+        """
+    
+        def inner_decorator(f):
+            f = click.command(*args, **kwargs)(f)
+            f = common_options(f)
+            return f
+    
+        return inner_decorator
 
     def dataSearch_name(self,name):
         if name:

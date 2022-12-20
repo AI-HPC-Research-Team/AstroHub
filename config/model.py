@@ -56,3 +56,6 @@ class BaseModel:
                 parameter.update({"parameters":parameters})
         return self.modelInfo
 
+    def model_parallism():
+        # This function is used to launch model parallism module 
+        return True

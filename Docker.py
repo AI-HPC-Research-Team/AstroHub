@@ -92,8 +92,8 @@ class DockerClient:
         dockerfile.close()
 
 
-    def list_image(self):
-        return self.client.images.list()
+#     def list_image(self):
+#         return self.client.images.list()
 
 
     def build_image(self,model_id):
